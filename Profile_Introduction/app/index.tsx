@@ -1,187 +1,253 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View, ScrollView, StatusBar } from "react-native";
 
-export default function HomeScreen() {
+export default function ProfileIntroduction() {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-      {/* Profile Header */}
-      <View style={styles.header}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>JE</Text>
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
+
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.appLabel}>PROFILE INTRODUCTION</Text>
+
+          <Text style={styles.title}>Hello, I'm Jhonrhane! 👋</Text>
+
+          <Text style={styles.subtitle}>
+            Welcome to my personal introduction app
+          </Text>
         </View>
 
-        <Text style={styles.greeting}>Hello, Im</Text>
-
-        <Text style={styles.name}>Jhonrhane Elarcosa</Text>
-
-        <Text style={styles.role}>Information Technology Student</Text>
-
-        <Text style={styles.introduction}>
-          Im passionate about technology, programming, and creating useful
-          applications. I enjoy learning new things and turning ideas into
-          working projects.
-        </Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>👋 About Me</Text>
-
-        <Text style={styles.cardText}>
-          Im an Information Technology student who enjoys exploring software
-          development and learning how technology can solve real-world problems.
-          Im currently improving my programming skills through different
-          projects and activities.
-        </Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>🎓 Education</Text>
-
-        <View style={styles.infoRow}>
-          <View style={styles.iconBox}>
-            <Text>📚</Text>
+        {/* Profile Card */}
+        <View style={styles.card}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>JE</Text>
           </View>
 
-          <View style={styles.infoContent}>
-            <Text style={styles.infoTitle}>Information Technology</Text>
+          <Text style={styles.name}>Jhonrhane Elarcosa</Text>
 
-            <Text style={styles.infoSubtitle}>College Student</Text>
+          <Text style={styles.role}>Information Technology Student</Text>
+
+          <View style={styles.divider} />
+
+          {/* Information */}
+          <View style={styles.infoSection}>
+            <Text style={styles.infoLabel}>🎓 COURSE / SECTION</Text>
+            <Text style={styles.infoText}>BS Information Technology</Text>
+          </View>
+
+          <View style={styles.infoSection}>
+            <Text style={styles.infoLabel}>💡 APP IDEA</Text>
+            <Text style={styles.infoText}>
+              A simple mobile profile application that introduces a student,
+              displays basic information, and gives a short overview of their
+              interests and goals.
+            </Text>
+          </View>
+
+          <View style={styles.infoSection}>
+            <Text style={styles.infoLabel}>🚀 GOAL</Text>
+            <Text style={styles.infoText}>
+              To learn how to create clean and interactive mobile applications
+              using React Native.
+            </Text>
           </View>
         </View>
-      </View>
-    </ScrollView>
+
+        {/* Skills / Interests */}
+        <View style={styles.interestsCard}>
+          <Text style={styles.sectionTitle}>My Interests</Text>
+
+          <View style={styles.tagContainer}>
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>💻 Coding</Text>
+            </View>
+
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>🌱 Gardening</Text>
+            </View>
+
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>🐱 Cats</Text>
+            </View>
+
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>📱 App Development</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Built with React Native</Text>
+
+          <Text style={styles.footerSubtext}>
+            Learning • Creating • Improving
+          </Text>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F4F7FB",
+    backgroundColor: "#172554",
   },
 
-  content: {
-    paddingBottom: 30,
+  scrollContainer: {
+    padding: 24,
+    paddingTop: 55,
+    paddingBottom: 40,
   },
 
   header: {
-    backgroundColor: "#172554",
-    paddingTop: 65,
-    paddingBottom: 35,
-    paddingHorizontal: 25,
+    marginBottom: 25,
+  },
+
+  appLabel: {
+    fontSize: 13,
+    fontWeight: "700",
+    letterSpacing: 2,
+    color: "#93C5FD",
+    marginBottom: 10,
+  },
+
+  title: {
+    fontSize: 32,
+    fontWeight: "800",
+    color: "#FFFFFF",
+    marginBottom: 8,
+  },
+
+  subtitle: {
+    fontSize: 15,
+    color: "#BFDBFE",
+    lineHeight: 22,
+  },
+
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 25,
+    padding: 25,
     alignItems: "center",
-    borderBottomLeftRadius: 35,
-    borderBottomRightRadius: 35,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 8,
   },
 
   avatar: {
-    width: 105,
-    height: 105,
-    borderRadius: 53,
-    backgroundColor: "#60A5FA",
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: "#2563EB",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 18,
-    borderWidth: 4,
-    borderColor: "#FFFFFF",
+    marginBottom: 15,
   },
 
   avatarText: {
-    fontSize: 32,
-    fontWeight: "bold",
+    fontSize: 28,
+    fontWeight: "800",
     color: "#FFFFFF",
-  },
-
-  greeting: {
-    fontSize: 16,
-    color: "#BFDBFE",
   },
 
   name: {
-    fontSize: 27,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-    marginTop: 4,
+    fontSize: 24,
+    fontWeight: "800",
+    color: "#172554",
     textAlign: "center",
   },
 
   role: {
     fontSize: 14,
-    color: "#DBEAFE",
-    marginTop: 7,
-    textAlign: "center",
-  },
-
-  introduction: {
-    fontSize: 14,
-    lineHeight: 21,
-    color: "#E0E7FF",
-    textAlign: "center",
-    marginTop: 18,
-    maxWidth: 340,
-  },
-
-  card: {
-    backgroundColor: "#FFFFFF",
-    marginHorizontal: 18,
-    marginTop: 18,
-    padding: 20,
-    borderRadius: 20,
-
-    elevation: 3,
-
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-  },
-
-  cardTitle: {
-    fontSize: 19,
-    fontWeight: "bold",
-    color: "#172554",
-    marginBottom: 12,
-  },
-
-  cardText: {
-    fontSize: 14,
-    lineHeight: 22,
-    color: "#475569",
-  },
-
-  infoRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  iconBox: {
-    width: 48,
-    height: 48,
-    borderRadius: 14,
-    backgroundColor: "#DBEAFE",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  infoContent: {
-    marginLeft: 14,
-  },
-
-  infoTitle: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#1E293B",
-  },
-
-  infoSubtitle: {
-    fontSize: 13,
     color: "#64748B",
-    marginTop: 3,
+    marginTop: 5,
+    textAlign: "center",
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: "#E2E8F0",
+    width: "100%",
+    marginVertical: 22,
+  },
+
+  infoSection: {
+    width: "100%",
+    marginBottom: 18,
+  },
+
+  infoLabel: {
+    fontSize: 12,
+    fontWeight: "800",
+    color: "#2563EB",
+    letterSpacing: 0.8,
+    marginBottom: 6,
+  },
+
+  infoText: {
+    fontSize: 15,
+    lineHeight: 22,
+    color: "#334155",
+  },
+
+  interestsCard: {
+    backgroundColor: "#1E3A8A",
+    borderRadius: 22,
+    padding: 22,
+    marginTop: 20,
+  },
+
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: "#FFFFFF",
+    marginBottom: 15,
+  },
+
+  tagContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+
+  tag: {
+    backgroundColor: "#3B82F6",
+    borderRadius: 20,
+    paddingVertical: 9,
+    paddingHorizontal: 14,
+  },
+
+  tagText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#FFFFFF",
+  },
+
+  footer: {
+    alignItems: "center",
+    marginTop: 25,
+  },
+
+  footerText: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#DBEAFE",
+  },
+
+  footerSubtext: {
+    fontSize: 12,
+    color: "#93C5FD",
+    marginTop: 5,
   },
 });
