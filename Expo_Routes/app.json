@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Profile_Introduction",
-    "slug": "Profile_Introduction",
+    "name": "1_Lab_Exam",
+    "slug": "1_Lab_Exam",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -48,4 +48,3 @@
     }
   }
 }
-

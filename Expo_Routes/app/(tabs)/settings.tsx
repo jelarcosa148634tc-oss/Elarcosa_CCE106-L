@@ -41,7 +41,7 @@ export default function SettingsScreen() {
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={[styles.appLabel, { color: "#93C5FD" }]}>SETTINGS</Text>
+        <Text style={[styles.appLabel, { color: "#93C5FD" }]}>EVENTMATE</Text>
 
         <Text style={styles.title}>App Settings</Text>
 

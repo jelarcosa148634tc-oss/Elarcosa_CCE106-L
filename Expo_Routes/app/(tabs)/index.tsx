@@ -1,315 +1,265 @@
 import React from "react";
 import {
+  Pressable,
+  ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  StatusBar,
-  Pressable,
+  useWindowDimensions,
 } from "react-native";
-import { useTheme } from "../../context/ThemeContext";
 import { Link } from "expo-router";
+import StatCard from "../../components/StatCard";
+import { useEvents } from "../../context/EventContext";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function HomeScreen() {
   const { darkMode } = useTheme();
+  const { width } = useWindowDimensions();
+  const { events } = useEvents();
+
+  const isWideScreen = width >= 600;
 
   const colors = darkMode
     ? {
         background: "#0F172A",
-        header: "#020617",
+        hero: "#1E3A8A",
         card: "#1E293B",
+        cardSecondary: "#172554",
         primary: "#60A5FA",
-        secondary: "#93C5FD",
+        accent: "#93C5FD",
         text: "#FFFFFF",
         bodyText: "#CBD5E1",
+        bodyText2: "#334155",
         muted: "#94A3B8",
-        iconBackground: "#334155",
-        interest: "#1E293B",
-        tag: "#334155",
+        border: "#334155",
+        button: "#2563EB",
+        buttonPressed: "#1D4ED8",
       }
     : {
         background: "#172554",
-        header: "#172554",
+        hero: "#1E40AF",
         card: "#FFFFFF",
+        cardSecondary: "#EFF6FF",
         primary: "#2563EB",
-        secondary: "#93C5FD",
+        accent: "#BFDBFE",
         text: "#FFFFFF",
         bodyText: "#334155",
+        bodyText2: "#334155",
         muted: "#64748B",
-        iconBackground: "#DBEAFE",
-        interest: "#FFFFFF",
-        tag: "#DBEAFE",
+        border: "#DBEAFE",
+        button: "#2563EB",
+        buttonPressed: "#1D4ED8",
       };
+
+  const totalEvents = events.length;
+
+  const joinedEvents = events.filter((event) => event.joined).length;
+
+  const upcomingEvents = events.filter((event) => !event.joined).length;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <StatusBar barStyle={darkMode ? "light-content" : "light-content"} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.background} />
 
       <ScrollView
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerStyle={[
+          styles.scrollContainer,
+          isWideScreen && styles.wideContainer,
+        ]}
         showsVerticalScrollIndicator={false}
       >
+        {/* HEADER */}
+
         <View style={styles.header}>
-          <Text style={[styles.appLabel, { color: colors.secondary }]}>
-            STUDENT DASHBOARD
+          <Text style={[styles.brand, { color: colors.accent }]}>
+            EVENTMATE
           </Text>
 
-          <Text style={styles.title}>Welcome, Jhonrhane!</Text>
+          <Text style={styles.pageTitle}>Campus Event Explorer</Text>
 
-          <Text style={[styles.subtitle, { color: "#BFDBFE" }]}>
-            Explore your student profile and projects
+          <Text style={[styles.pageSubtitle, { color: colors.accent }]}>
+            Discover what's happening around your campus.
           </Text>
         </View>
 
-        <View style={[styles.welcomeCard, { backgroundColor: colors.card }]}>
-          <View style={[styles.avatar, { backgroundColor: colors.primary }]}>
-            <Text style={styles.avatarText}>JE</Text>
-          </View>
+        {/* WELCOME HERO */}
 
-          <View style={styles.welcomeContent}>
-            <Text
-              style={[
-                styles.welcomeTitle,
-                { color: darkMode ? "#FFFFFF" : "#172554" },
-              ]}
-            >
-              Hello, Jhonrhane!
-            </Text>
+        <View style={[styles.heroCard, { backgroundColor: colors.hero }]}>
+          <View style={styles.heroContent}>
+            <Text style={styles.heroLabel}>WELCOME BACK</Text>
 
-            <Text style={[styles.welcomeText, { color: colors.muted }]}>
-              Welcome to your personal student dashboard. Keep learning,
-              creating, and improving your skills.
-            </Text>
-          </View>
-        </View>
-
-        <Text style={styles.sectionTitle}>Quick Overview</Text>
-
-        <View style={styles.statsRow}>
-          <View style={[styles.statCard, { backgroundColor: colors.card }]}>
-            <Text style={styles.statIcon}>🎓</Text>
+            <Text style={styles.heroTitle}>Hello, Jhonrhane!</Text>
 
             <Text
               style={[
-                styles.statNumber,
-                { color: darkMode ? "#FFFFFF" : "#172554" },
+                styles.heroText,
+                { color: colors.accent, marginBottom: 35 },
               ]}
             >
-              BSIT
+              Explore campus activities, discover new experiences, and join
+              events that interest you.
             </Text>
 
-            <Text style={[styles.statLabel, { color: colors.muted }]}>
-              Course
-            </Text>
+            <Link href="/(tabs)/events" asChild>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.exploreButton,
+                  {
+                    backgroundColor: pressed
+                      ? colors.buttonPressed
+                      : colors.button,
+                  },
+                ]}
+              >
+                <Text style={styles.exploreButtonText}>Explore Events</Text>
+
+                <Text style={styles.arrow}>→</Text>
+              </Pressable>
+            </Link>
           </View>
 
-          <View style={[styles.statCard, { backgroundColor: colors.card }]}>
-            <Text style={styles.statIcon}>💻</Text>
+          <View style={styles.heroDecoration}>
+            <View
+              style={[styles.decorationLarge, { borderColor: colors.accent }]}
+            />
+
+            <View
+              style={[
+                styles.decorationSmall,
+                { backgroundColor: colors.accent },
+              ]}
+            />
+          </View>
+        </View>
+
+        {/* OVERVIEW */}
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Overview</Text>
+
+          <Text style={[styles.sectionSubtitle, { color: colors.accent }]}>
+            Your event activity
+          </Text>
+        </View>
+
+        <View
+          style={[
+            styles.statsContainer,
+            isWideScreen && styles.statsContainerWide,
+          ]}
+        >
+          <View style={styles.statWrapper}>
+            <StatCard label="Total Events" value={String(totalEvents)} />
+          </View>
+
+          <View style={styles.statWrapper}>
+            <StatCard label="Joined Events" value={String(joinedEvents)} />
+          </View>
+
+          <View
+            style={[styles.statWrapper, isWideScreen && styles.statWrapperWide]}
+          >
+            <StatCard label="Upcoming Events" value={String(upcomingEvents)} />
+          </View>
+        </View>
+
+        {/* UPCOMING EVENTS */}
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Upcoming Events</Text>
+
+          <Text style={[styles.sectionSubtitle, { color: colors.accent }]}>
+            Don't miss out
+          </Text>
+        </View>
+
+        <View style={[styles.eventPreview, { backgroundColor: colors.card }]}>
+          <View style={styles.eventAccent} />
+
+          <View style={styles.eventContent}>
+            <Text style={[styles.eventCategory, { color: colors.primary }]}>
+              ACADEMIC
+            </Text>
 
             <Text
               style={[
-                styles.statNumber,
-                { color: darkMode ? "#FFFFFF" : "#172554" },
+                styles.eventTitle,
+                { color: darkMode ? colors.text : "#172554" },
               ]}
             >
-              IT
+              Campus Coding Workshop
             </Text>
 
-            <Text style={[styles.statLabel, { color: colors.muted }]}>
-              Field
+            <Text style={[styles.eventDate, { color: colors.muted }]}>
+              September 20, 2026 • 9:00 AM
+            </Text>
+
+            <Text style={[styles.eventVenue, { color: colors.bodyText }]}>
+              Computer Laboratory 1
             </Text>
           </View>
         </View>
 
-        <View style={[styles.card, { backgroundColor: colors.card }]}>
-          <Text
-            style={[
-              styles.cardTitle,
-              { color: darkMode ? "#FFFFFF" : "#172554" },
-            ]}
-          >
-            💡 About This App
-          </Text>
+        <View style={[styles.eventPreview, { backgroundColor: colors.card }]}>
+          <View style={styles.eventAccent} />
 
-          <Text style={[styles.cardText, { color: colors.bodyText }]}>
-            This application is a simple student mobile app created using React
-            Native and Expo. It demonstrates navigation, profile information,
-            and interactive features.
-          </Text>
-        </View>
-
-        <View style={[styles.card, { backgroundColor: colors.card }]}>
-          <Text
-            style={[
-              styles.cardTitle,
-              { color: darkMode ? "#FFFFFF" : "#172554" },
-            ]}
-          >
-            🚀 What I'm Learning
-          </Text>
-
-          <View style={styles.learningItem}>
-            <View
-              style={[
-                styles.iconBox,
-                { backgroundColor: colors.iconBackground },
-              ]}
-            >
-              <Text>📱</Text>
-            </View>
-
-            <View style={styles.learningContent}>
-              <Text
-                style={[
-                  styles.learningTitle,
-                  { color: darkMode ? "#FFFFFF" : "#1E293B" },
-                ]}
-              >
-                React Native
-              </Text>
-
-              <Text style={[styles.learningText, { color: colors.muted }]}>
-                Building mobile applications
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.learningItem}>
-            <View
-              style={[
-                styles.iconBox,
-                { backgroundColor: colors.iconBackground },
-              ]}
-            >
-              <Text>🧭</Text>
-            </View>
-
-            <View style={styles.learningContent}>
-              <Text
-                style={[
-                  styles.learningTitle,
-                  { color: darkMode ? "#FFFFFF" : "#1E293B" },
-                ]}
-              >
-                Expo Router
-              </Text>
-
-              <Text style={[styles.learningText, { color: colors.muted }]}>
-                Learning app navigation
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.learningItem}>
-            <View
-              style={[
-                styles.iconBox,
-                { backgroundColor: colors.iconBackground },
-              ]}
-            >
-              <Text>💻</Text>
-            </View>
-
-            <View style={styles.learningContent}>
-              <Text
-                style={[
-                  styles.learningTitle,
-                  { color: darkMode ? "#FFFFFF" : "#1E293B" },
-                ]}
-              >
-                Programming
-              </Text>
-
-              <Text style={[styles.learningText, { color: colors.muted }]}>
-                Improving coding skills
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={[styles.interestsCard, { backgroundColor: colors.card }]}>
-          <Text
-            style={[
-              styles.interestsTitle,
-              { color: darkMode ? "#FFFFFF" : "#172554" },
-            ]}
-          >
-            My Interests
-          </Text>
-
-          <View style={styles.tagContainer}>
-            <View style={[styles.tag, { backgroundColor: colors.tag }]}>
-              <Text
-                style={
-                  (styles.tagText, { color: darkMode ? "#FFFFFF" : "#172554" })
-                }
-              >
-                💻 Coding
-              </Text>
-            </View>
-
-            <View style={[styles.tag, { backgroundColor: colors.tag }]}>
-              <Text
-                style={
-                  (styles.tagText, { color: darkMode ? "#FFFFFF" : "#172554" })
-                }
-              >
-                👾 Gaming
-              </Text>
-            </View>
-
-            <View style={[styles.tag, { backgroundColor: colors.tag }]}>
-              <Text
-                style={
-                  (styles.tagText, { color: darkMode ? "#FFFFFF" : "#172554" })
-                }
-              >
-                🐱 Cats
-              </Text>
-            </View>
-
-            <View style={[styles.tag, { backgroundColor: colors.tag }]}>
-              <Text
-                style={
-                  (styles.tagText, { color: darkMode ? "#FFFFFF" : "#172554" })
-                }
-              >
-                📱 App Development
-              </Text>
-            </View>
-
-            <View style={[styles.tag, { backgroundColor: colors.tag }]}>
-              <Text
-                style={
-                  (styles.tagText, { color: darkMode ? "#FFFFFF" : "#172554" })
-                }
-              >
-                📚 Learning
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        <Link href="/student/101" asChild>
-          <Pressable style={styles.studentButton}>
-            <Text style={styles.studentButtonText}>View Student Route</Text>
-          </Pressable>
-        </Link>
-
-        <Link href="/student/999" asChild>
-          <Pressable style={styles.studentButton}>
-            <Text style={styles.studentButtonText}>
-              View Student Route the 999 test
+          <View style={styles.eventContent}>
+            <Text style={[styles.eventCategory, { color: colors.primary }]}>
+              SPORTS
             </Text>
-          </Pressable>
-        </Link>
 
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Developed using React Native</Text>
+            <Text
+              style={[
+                styles.eventTitle,
+                { color: darkMode ? colors.text : "#172554" },
+              ]}
+            >
+              Basketball Tournament
+            </Text>
 
-          <Text style={styles.footerSubtext}>
-            Learning • Creating • Improving
+            <Text style={[styles.eventDate, { color: colors.muted }]}>
+              September 21, 2026 • 2:00 PM
+            </Text>
+
+            <Text style={[styles.eventVenue, { color: colors.bodyText }]}>
+              University Gym
+            </Text>
+          </View>
+        </View>
+
+        {/* QUICK ACCESS */}
+
+        <View
+          style={[styles.quickCard, { backgroundColor: colors.cardSecondary }]}
+        >
+          <Text
+            style={[
+              styles.quickTitle,
+              { color: darkMode ? colors.text : "#172554" },
+            ]}
+          >
+            Looking for more events?
           </Text>
+
+          <Text style={[styles.quickText, { color: colors.bodyText }]}>
+            Browse the complete event list and filter activities by category.
+          </Text>
+
+          <Link href="/(tabs)/events" asChild>
+            <Pressable
+              style={({ pressed }) => [
+                styles.secondaryButton,
+                {
+                  backgroundColor: pressed
+                    ? colors.buttonPressed
+                    : colors.button,
+                },
+              ]}
+            >
+              <Text style={styles.secondaryButtonText}>View All Events</Text>
+            </Pressable>
+          </Link>
         </View>
       </ScrollView>
     </View>
@@ -321,214 +271,250 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  studentButton: {
-    backgroundColor: "#2563EB",
-    borderRadius: 15,
-    paddingVertical: 14,
-    alignItems: "center",
-    marginTop: 18,
-  },
-
-  studentButtonText: {
-    color: "#FFFFFF",
-    fontSize: 15,
-    fontWeight: "700",
-  },
-
   scrollContainer: {
     padding: 24,
     paddingTop: 55,
-    paddingBottom: 40,
+    paddingBottom: 45,
+  },
+
+  wideContainer: {
+    paddingHorizontal: "10%",
   },
 
   header: {
     marginBottom: 25,
   },
 
-  appLabel: {
+  brand: {
     fontSize: 13,
-    fontWeight: "700",
-    letterSpacing: 2,
-    marginBottom: 10,
+    fontWeight: "800",
+    letterSpacing: 3,
+    marginBottom: 9,
   },
 
-  title: {
-    fontSize: 30,
+  pageTitle: {
+    fontSize: 31,
     fontWeight: "800",
     color: "#FFFFFF",
-    marginBottom: 8,
+    marginBottom: 7,
   },
 
-  subtitle: {
-    fontSize: 15,
-    lineHeight: 22,
+  pageSubtitle: {
+    fontSize: 14,
+    lineHeight: 21,
   },
 
-  welcomeCard: {
-    borderRadius: 25,
-    padding: 22,
+  heroCard: {
+    minHeight: 245,
+    borderRadius: 28,
+    padding: 25,
+    overflow: "hidden",
+    position: "relative",
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+  },
+
+  heroContent: {
+    width: "82%",
+    zIndex: 2,
+  },
+
+  heroLabel: {
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 2,
+    color: "#BFDBFE",
+    marginBottom: 9,
+  },
+
+  heroTitle: {
+    fontSize: 25,
+    lineHeight: 31,
+    fontWeight: "800",
+    color: "#FFFFFF",
+    marginBottom: 9,
+  },
+
+  heroText: {
+    fontSize: 13,
+    lineHeight: 20,
+  },
+
+  exploreButton: {
     flexDirection: "row",
     alignItems: "center",
-    elevation: 8,
-  },
-
-  avatar: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
     justifyContent: "center",
-    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
   },
 
-  avatarText: {
-    fontSize: 23,
-    fontWeight: "800",
+  exploreButtonText: {
     color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
 
-  welcomeContent: {
-    flex: 1,
-    marginLeft: 16,
+  arrow: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    marginLeft: 6,
+    fontWeight: "600",
+    lineHeight: 16,
   },
 
-  welcomeTitle: {
-    fontSize: 19,
-    fontWeight: "800",
-    marginBottom: 5,
+  heroDecoration: {
+    position: "absolute",
+    right: -35,
+    bottom: -35,
+    width: 150,
+    height: 150,
   },
 
-  welcomeText: {
-    fontSize: 13,
-    lineHeight: 19,
+  decorationLarge: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    borderWidth: 2,
+    opacity: 0.25,
+  },
+
+  decorationSmall: {
+    position: "absolute",
+    width: 55,
+    height: 55,
+    borderRadius: 28,
+    right: 45,
+    top: 45,
+    opacity: 0.15,
+  },
+
+  sectionHeader: {
+    marginTop: 28,
+    marginBottom: 13,
   },
 
   sectionTitle: {
     fontSize: 20,
     fontWeight: "800",
     color: "#FFFFFF",
-    marginTop: 25,
-    marginBottom: 14,
   },
 
-  statsRow: {
+  sectionSubtitle: {
+    fontSize: 12,
+    marginTop: 3,
+  },
+
+  statsContainer: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 12,
   },
 
-  statCard: {
+  statsContainerWide: {
+    justifyContent: "space-between",
+  },
+
+  statWrapper: {
     flex: 1,
-    borderRadius: 20,
-    padding: 18,
-    alignItems: "center",
-    elevation: 5,
+    minWidth: "30%",
   },
 
-  statIcon: {
-    fontSize: 25,
-    marginBottom: 7,
+  statWrapperWide: {
+    minWidth: "30%",
   },
 
-  statNumber: {
-    fontSize: 18,
-    fontWeight: "800",
-  },
-
-  statLabel: {
-    fontSize: 12,
-    marginTop: 3,
-  },
-
-  card: {
-    borderRadius: 22,
-    padding: 22,
-    marginTop: 18,
-    elevation: 6,
-  },
-
-  cardTitle: {
-    fontSize: 19,
-    fontWeight: "800",
-    marginBottom: 12,
-  },
-
-  cardText: {
-    fontSize: 14,
-    lineHeight: 22,
-  },
-
-  learningItem: {
+  eventPreview: {
     flexDirection: "row",
-    alignItems: "center",
+    borderRadius: 20,
+    overflow: "hidden",
+    marginBottom: 12,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.12,
+    shadowRadius: 7,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+  },
+
+  eventAccent: {
+    width: 5,
+    backgroundColor: "#2563EB",
+  },
+
+  eventContent: {
+    flex: 1,
+    padding: 18,
+  },
+
+  eventCategory: {
+    fontSize: 10,
+    fontWeight: "800",
+    letterSpacing: 1.5,
+    marginBottom: 5,
+  },
+
+  eventTitle: {
+    fontSize: 17,
+    fontWeight: "800",
+    marginBottom: 6,
+  },
+
+  eventDate: {
+    fontSize: 12,
+    marginBottom: 5,
+  },
+
+  eventVenue: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
+
+  quickCard: {
+    borderRadius: 22,
+    padding: 21,
     marginTop: 12,
   },
 
-  iconBox: {
-    width: 45,
-    height: 45,
-    borderRadius: 13,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  learningContent: {
-    marginLeft: 13,
-  },
-
-  learningTitle: {
-    fontSize: 15,
+  quickTitle: {
+    fontSize: 18,
     fontWeight: "800",
+    marginBottom: 7,
   },
 
-  learningText: {
+  quickText: {
     fontSize: 13,
-    marginTop: 3,
+    lineHeight: 20,
   },
 
-  interestsCard: {
-    borderRadius: 22,
-    padding: 22,
-    marginTop: 20,
+  secondaryButton: {
+    alignSelf: "flex-start",
+    marginTop: 15,
+    paddingVertical: 11,
+    paddingHorizontal: 17,
+    borderRadius: 12,
   },
 
-  interestsTitle: {
-    fontSize: 20,
-    fontWeight: "800",
-    color: "#FFFFFF",
-    marginBottom: 15,
-  },
-
-  tagContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-
-  tag: {
-    borderRadius: 20,
-    paddingVertical: 9,
-    paddingHorizontal: 14,
-  },
-
-  tagText: {
+  secondaryButtonText: {
+    marginTop: 5,
     fontSize: 13,
-    fontWeight: "600",
-    color: "#FFFFFF",
-  },
-
-  footer: {
-    alignItems: "center",
-    marginTop: 25,
+    fontWeight: "500",
+    color: "#0066cc",
+    textDecorationLine: "underline",
   },
 
   footerText: {
-    fontSize: 14,
-    fontWeight: "700",
-    color: "#DBEAFE",
-  },
-
-  footerSubtext: {
     fontSize: 12,
-    color: "#93C5FD",
-    marginTop: 5,
+    fontWeight: "800",
+    letterSpacing: 2,
   },
 });
