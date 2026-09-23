@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // Added useState
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,11 +8,12 @@ import {
   Pressable,
 } from "react-native";
 import { useTheme } from "../../context/ThemeContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SettingsScreen() {
   const { darkMode, toggleTheme } = useTheme();
+  const { logout } = useAuth();
 
-  // 1. Define states for each new switch toggle
   const [pushNotif, setPushNotif] = useState(false);
   const [emailNotif, setEmailNotif] = useState(false);
   const [messagesNotif, setMessagesNotif] = useState(false);
@@ -214,11 +215,33 @@ export default function SettingsScreen() {
           </Pressable>
         </View>
 
-        <View style={styles.footer}>
+        {/* LOGOUT BUTTON */}
+        <Pressable
+          style={[
+            styles.logoutButton,
+            {
+              backgroundColor: darkMode ? "#DC2626" : "#DC2626",
+            },
+          ]}
+          onPress={logout}
+        >
+          <Text
+            style={[
+              styles.logoutText,
+              {
+                color: darkMode ? "#FFFFFF" : "#FFFFFF",
+              },
+            ]}
+          >
+            🚪 Logout
+          </Text>
+        </Pressable>
+
+        {/* <View style={styles.footer}>
           <Text style={styles.footerText}>Developed using React Native</Text>
 
           <Text style={styles.footerSubtext}>React Native • Expo Router</Text>
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );
@@ -346,16 +369,29 @@ const styles = StyleSheet.create({
     color: "#60A5FA",
   },
 
-  footer: {
+  logoutButton: {
+    height: 54,
+    borderRadius: 16,
     alignItems: "center",
-    marginTop: 30,
+    justifyContent: "center",
+    marginTop: 28,
   },
 
-  footerText: {
-    color: "#DBEAFE",
-    fontSize: 14,
-    fontWeight: "700",
+  logoutText: {
+    fontSize: 16,
+    fontWeight: "800",
   },
+
+  // footer: {
+  //   alignItems: "center",
+  //   marginTop: 30,
+  // },
+
+  // footerText: {
+  //   color: "#DBEAFE",
+  //   fontSize: 14,
+  //   fontWeight: "700",
+  // },
 
   footerSubtext: {
     color: "#93C5FD",

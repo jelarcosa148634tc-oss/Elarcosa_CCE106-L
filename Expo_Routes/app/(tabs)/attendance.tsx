@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useTheme } from "../../context/ThemeContext";
 
@@ -35,41 +35,31 @@ const initialStudents: Student[] = [
 export default function AttendanceScreen() {
   const { darkMode } = useTheme();
 
-  const [students, setStudents] =
-    useState<Student[]>(initialStudents);
+  const [students, setStudents] = useState<Student[]>(initialStudents);
 
-  const [message, setMessage] =
-    useState("Attendance is ready.");
+  const [message, setMessage] = useState("Attendance is ready.");
 
   const presentCount = students.filter(
-    (student) => student.status === "Present"
+    (student) => student.status === "Present",
   ).length;
 
   const absentCount = students.filter(
-    (student) => student.status === "Absent"
+    (student) => student.status === "Absent",
   ).length;
 
   const markedCount = presentCount + absentCount;
 
-  const remainingCount =
-    students.length - markedCount;
+  const remainingCount = students.length - markedCount;
 
   useEffect(() => {
-    setMessage(
-      `${markedCount} of ${students.length} students marked`
-    );
+    setMessage(`${markedCount} of ${students.length} students marked`);
   }, [markedCount, students.length]);
 
-  const updateAttendance = (
-    id: number,
-    status: "Present" | "Absent"
-  ) => {
+  const updateAttendance = (id: number, status: "Present" | "Absent") => {
     setStudents((currentStudents) =>
       currentStudents.map((student) =>
-        student.id === id
-          ? { ...student, status }
-          : student
-      )
+        student.id === id ? { ...student, status } : student,
+      ),
     );
   };
 
@@ -78,28 +68,19 @@ export default function AttendanceScreen() {
       style={[
         styles.container,
         {
-          backgroundColor: darkMode
-            ? "#0F172A"
-            : "#FFFFFF",
+          backgroundColor: darkMode ? "#0F172A" : "#172554",
         },
       ]}
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.content}>
-
-        {/* ================= HEADER ================= */}
-
         <View style={styles.header}>
-
           <View style={styles.headerTextContainer}>
-
             <Text
               style={[
                 styles.smallTitle,
                 {
-                  color: darkMode
-                    ? "#60A5FA"
-                    : "#2563EB",
+                  color: darkMode ? "#60A5FA" : "#60A5FA",
                 },
               ]}
             >
@@ -110,9 +91,7 @@ export default function AttendanceScreen() {
               style={[
                 styles.title,
                 {
-                  color: darkMode
-                    ? "#FFFFFF"
-                    : "#172554",
+                  color: darkMode ? "#FFFFFF" : "#FFFFFF",
                 },
               ]}
             >
@@ -123,24 +102,19 @@ export default function AttendanceScreen() {
               style={[
                 styles.subtitle,
                 {
-                  color: darkMode
-                    ? "#94A3B8"
-                    : "#64748B",
+                  color: darkMode ? "#CBD5E1" : "#CBD5E1",
                 },
               ]}
             >
               Track today's student attendance
             </Text>
-
           </View>
 
           <View
             style={[
               styles.headerIcon,
               {
-                backgroundColor: darkMode
-                  ? "#1E3A5F"
-                  : "#DBEAFE",
+                backgroundColor: darkMode ? "#1E3A5F" : "#DBEAFE",
               },
             ]}
           >
@@ -148,36 +122,31 @@ export default function AttendanceScreen() {
               style={[
                 styles.headerIconText,
                 {
-                  color: darkMode
-                    ? "#60A5FA"
-                    : "#2563EB",
+                  color: darkMode ? "#60A5FA" : "#2563EB",
                 },
               ]}
             >
               ✓
             </Text>
           </View>
-
         </View>
-
-        {/* ================= SUMMARY CARD ================= */}
 
         <View
           style={[
             styles.summaryCard,
             {
-              backgroundColor: darkMode
-                ? "#1E293B"
-                : "#172554",
+              backgroundColor: darkMode ? "#1E293B" : "#FFFFFF",
             },
           ]}
         >
-
           <View style={styles.summaryHeader}>
-
             <View style={styles.summaryTextContainer}>
-
-              <Text style={styles.summaryTitle}>
+              <Text
+                style={[
+                  styles.summaryTitle,
+                  { color: darkMode ? "#FFFFFF" : "#0F172A" },
+                ]}
+              >
                 Attendance Summary
               </Text>
 
@@ -185,64 +154,45 @@ export default function AttendanceScreen() {
                 style={[
                   styles.summaryMessage,
                   {
-                    color: darkMode
-                      ? "#CBD5E1"
-                      : "#BFDBFE",
+                    color: darkMode ? "#CBD5E1" : "#0F172A",
                   },
                 ]}
               >
                 {message}
               </Text>
-
             </View>
 
             <View style={styles.totalCircle}>
+              <Text style={styles.totalNumber}>{students.length}</Text>
 
-              <Text style={styles.totalNumber}>
-                {students.length}
-              </Text>
-
-              <Text style={styles.totalLabel}>
-                TOTAL
-              </Text>
-
+              <Text style={styles.totalLabel}>TOTAL</Text>
             </View>
-
           </View>
 
           <View
             style={[
               styles.summaryDivider,
               {
-                backgroundColor: darkMode
-                  ? "#334155"
-                  : "#334477",
+                backgroundColor: darkMode ? "#334155" : "#334477",
               },
             ]}
           />
 
-          {/* ================= STATISTICS ================= */}
-
           <View style={styles.statsRow}>
-
             {/* PRESENT */}
 
             <View style={styles.statItem}>
-
-              <View
-                style={[
-                  styles.statIcon,
-                  styles.presentIcon,
-                ]}
-              >
-                <Text style={styles.statIconText}>
-                  ✓
-                </Text>
+              <View style={[styles.statIcon, styles.presentIcon]}>
+                <Text style={styles.statIconText}>✓</Text>
               </View>
 
               <View>
-
-                <Text style={styles.statNumber}>
+                <Text
+                  style={[
+                    styles.statNumber,
+                    { color: darkMode ? "#CBD5E1" : "#0F172A" },
+                  ]}
+                >
                   {presentCount}
                 </Text>
 
@@ -250,37 +200,27 @@ export default function AttendanceScreen() {
                   style={[
                     styles.statLabel,
                     {
-                      color: darkMode
-                        ? "#94A3B8"
-                        : "#CBD5E1",
+                      color: darkMode ? "#CBD5E1" : "#0F172A",
                     },
                   ]}
                 >
                   Present
                 </Text>
-
               </View>
-
             </View>
 
-            {/* ABSENT */}
-
             <View style={styles.statItem}>
-
-              <View
-                style={[
-                  styles.statIcon,
-                  styles.absentIcon,
-                ]}
-              >
-                <Text style={styles.statIconText}>
-                  ×
-                </Text>
+              <View style={[styles.statIcon, styles.absentIcon]}>
+                <Text style={styles.statIconText}>×</Text>
               </View>
 
               <View>
-
-                <Text style={styles.statNumber}>
+                <Text
+                  style={[
+                    styles.statNumber,
+                    { color: darkMode ? "#CBD5E1" : "#0F172A" },
+                  ]}
+                >
                   {absentCount}
                 </Text>
 
@@ -288,37 +228,27 @@ export default function AttendanceScreen() {
                   style={[
                     styles.statLabel,
                     {
-                      color: darkMode
-                        ? "#94A3B8"
-                        : "#CBD5E1",
+                      color: darkMode ? "#CBD5E1" : "#0F172A",
                     },
                   ]}
                 >
                   Absent
                 </Text>
-
               </View>
-
             </View>
 
-            {/* REMAINING */}
-
             <View style={styles.statItem}>
-
-              <View
-                style={[
-                  styles.statIcon,
-                  styles.remainingIcon,
-                ]}
-              >
-                <Text style={styles.statIconText}>
-                  •
-                </Text>
+              <View style={[styles.statIcon, styles.remainingIcon]}>
+                <Text style={styles.statIconText}>•</Text>
               </View>
 
               <View>
-
-                <Text style={styles.statNumber}>
+                <Text
+                  style={[
+                    styles.statNumber,
+                    { color: darkMode ? "#CBD5E1" : "#0F172A" },
+                  ]}
+                >
                   {remainingCount}
                 </Text>
 
@@ -326,36 +256,24 @@ export default function AttendanceScreen() {
                   style={[
                     styles.statLabel,
                     {
-                      color: darkMode
-                        ? "#94A3B8"
-                        : "#CBD5E1",
+                      color: darkMode ? "#CBD5E1" : "#0F172A",
                     },
                   ]}
                 >
                   Remaining
                 </Text>
-
               </View>
-
             </View>
-
           </View>
-
         </View>
 
-        {/* ================= STUDENT LIST HEADER ================= */}
-
         <View style={styles.sectionHeader}>
-
           <View>
-
             <Text
               style={[
                 styles.sectionTitle,
                 {
-                  color: darkMode
-                    ? "#FFFFFF"
-                    : "#172554",
+                  color: darkMode ? "#FFFFFF" : "#FFFFFF",
                 },
               ]}
             >
@@ -366,104 +284,74 @@ export default function AttendanceScreen() {
               style={[
                 styles.sectionSubtitle,
                 {
-                  color: darkMode
-                    ? "#94A3B8"
-                    : "#64748B",
+                  color: darkMode ? "#CBD5E1" : "#CBD5E1",
                 },
               ]}
             >
               Mark each student as present or absent
             </Text>
-
           </View>
 
           <View
             style={[
               styles.countBadge,
               {
-                backgroundColor: darkMode
-                  ? "#1E3A5F"
-                  : "#DBEAFE",
+                backgroundColor: darkMode ? "#1E3A5F" : "#DBEAFE",
               },
             ]}
           >
-
             <Text
               style={[
                 styles.countBadgeText,
                 {
-                  color: darkMode
-                    ? "#60A5FA"
-                    : "#2563EB",
+                  color: darkMode ? "#FFFFFF" : "#0F172A",
                 },
               ]}
             >
               {students.length}
             </Text>
-
           </View>
-
         </View>
 
-        {/* ================= STUDENT CARDS ================= */}
-
         {students.map((student) => (
-
           <View
             key={student.id}
             style={[
               styles.studentCard,
               {
-                backgroundColor: darkMode
-                  ? "#1E293B"
-                  : "#FFFFFF",
+                backgroundColor: darkMode ? "#1E293B" : "#FFFFFF",
 
-                borderColor: darkMode
-                  ? "#334155"
-                  : "#E2E8F0",
+                borderColor: darkMode ? "#334155" : "#E2E8F0",
               },
             ]}
           >
-
-            {/* STUDENT INFORMATION */}
-
             <View style={styles.studentTop}>
-
               <View
                 style={[
                   styles.numberCircle,
                   {
-                    backgroundColor: darkMode
-                      ? "#172554"
-                      : "#EFF6FF",
+                    backgroundColor: darkMode ? "#172554" : "#EFF6FF",
                   },
                 ]}
               >
-
                 <Text
                   style={[
                     styles.numberText,
                     {
-                      color: darkMode
-                        ? "#60A5FA"
-                        : "#2563EB",
+                      color: darkMode ? "#60A5FA" : "#2563EB",
                     },
                   ]}
                 >
                   {String(student.id).padStart(2, "0")}
                 </Text>
-
               </View>
 
               <View style={styles.studentInfo}>
-
                 <Text
                   style={[
                     styles.studentName,
                     {
-                      color: darkMode
-                        ? "#FFFFFF"
-                        : "#1E293B",
+                      color: darkMode ? "#FFFFFF" : "#1E293B",
                     },
                   ]}
                 >
@@ -471,16 +359,13 @@ export default function AttendanceScreen() {
                 </Text>
 
                 <View style={styles.statusRow}>
-
                   <View
                     style={[
                       styles.statusDot,
 
-                      student.status === "Present" &&
-                        styles.presentDot,
+                      student.status === "Present" && styles.presentDot,
 
-                      student.status === "Absent" &&
-                        styles.absentDot,
+                      student.status === "Absent" && styles.absentDot,
                     ]}
                   />
 
@@ -492,51 +377,33 @@ export default function AttendanceScreen() {
                           student.status === "Present"
                             ? "#16A34A"
                             : student.status === "Absent"
-                            ? "#DC2626"
-                            : darkMode
-                            ? "#94A3B8"
-                            : "#64748B",
+                              ? "#DC2626"
+                              : darkMode
+                                ? "#94A3B8"
+                                : "#64748B",
                       },
                     ]}
                   >
                     {student.status}
                   </Text>
-
                 </View>
-
               </View>
-
             </View>
 
-            {/* ================= BUTTONS ================= */}
-
             <View style={styles.buttonRow}>
-
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={[
                   styles.attendanceButton,
                   styles.presentButton,
 
-                  student.status === "Present" &&
-                    styles.presentSelected,
+                  student.status === "Present" && styles.presentSelected,
                 ]}
-                onPress={() =>
-                  updateAttendance(
-                    student.id,
-                    "Present"
-                  )
-                }
+                onPress={() => updateAttendance(student.id, "Present")}
               >
+                <Text style={styles.buttonIcon}>✓</Text>
 
-                <Text style={styles.buttonIcon}>
-                  ✓
-                </Text>
-
-                <Text style={styles.buttonText}>
-                  Present
-                </Text>
-
+                <Text style={styles.buttonText}>Present</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -545,44 +412,24 @@ export default function AttendanceScreen() {
                   styles.attendanceButton,
                   styles.absentButton,
 
-                  student.status === "Absent" &&
-                    styles.absentSelected,
+                  student.status === "Absent" && styles.absentSelected,
                 ]}
-                onPress={() =>
-                  updateAttendance(
-                    student.id,
-                    "Absent"
-                  )
-                }
+                onPress={() => updateAttendance(student.id, "Absent")}
               >
+                <Text style={styles.buttonIcon}>×</Text>
 
-                <Text style={styles.buttonIcon}>
-                  ×
-                </Text>
-
-                <Text style={styles.buttonText}>
-                  Absent
-                </Text>
-
+                <Text style={styles.buttonText}>Absent</Text>
               </TouchableOpacity>
-
             </View>
-
           </View>
-
         ))}
 
-        {/* ================= FOOTER ================= */}
-
         <View style={styles.footer}>
-
           <View
             style={[
               styles.footerLine,
               {
-                backgroundColor: darkMode
-                  ? "#334155"
-                  : "#E2E8F0",
+                backgroundColor: darkMode ? "#334155" : "#E2E8F0",
               },
             ]}
           />
@@ -591,28 +438,19 @@ export default function AttendanceScreen() {
             style={[
               styles.footerText,
               {
-                color: darkMode
-                  ? "#64748B"
-                  : "#94A3B8",
+                color: darkMode ? "#CBD5E1" : "#CBD5E1",
               },
             ]}
           >
             Attendance updates automatically
           </Text>
-
         </View>
-
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-
-  // =====================================================
-  // MAIN SCREEN
-  // =====================================================
-
   container: {
     flex: 1,
   },
@@ -622,10 +460,6 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     paddingBottom: 40,
   },
-
-  // =====================================================
-  // HEADER
-  // =====================================================
 
   header: {
     flexDirection: "row",
@@ -669,10 +503,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
 
-  // =====================================================
-  // SUMMARY CARD
-  // =====================================================
-
   summaryCard: {
     borderRadius: 22,
     padding: 20,
@@ -704,7 +534,6 @@ const styles = StyleSheet.create({
   summaryTitle: {
     fontSize: 18,
     fontWeight: "800",
-    color: "#FFFFFF",
   },
 
   summaryMessage: {
@@ -738,10 +567,6 @@ const styles = StyleSheet.create({
     height: 1,
     marginVertical: 18,
   },
-
-  // =====================================================
-  // STATISTICS
-  // =====================================================
 
   statsRow: {
     flexDirection: "row",
@@ -781,7 +606,7 @@ const styles = StyleSheet.create({
   },
 
   statNumber: {
-    color: "#FFFFFF",
+    color: "#0F172A",
     fontSize: 17,
     fontWeight: "800",
   },
@@ -790,10 +615,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     marginTop: 1,
   },
-
-  // =====================================================
-  // STUDENT LIST HEADER
-  // =====================================================
 
   sectionHeader: {
     flexDirection: "row",
@@ -825,10 +646,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "800",
   },
-
-  // =====================================================
-  // STUDENT CARD
-  // =====================================================
 
   studentCard: {
     borderRadius: 18,
@@ -905,10 +722,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // =====================================================
-  // BUTTONS
-  // =====================================================
-
   buttonRow: {
     flexDirection: "row",
     gap: 10,
@@ -956,10 +769,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
 
-  // =====================================================
-  // FOOTER
-  // =====================================================
-
   footer: {
     alignItems: "center",
     paddingTop: 10,
@@ -976,5 +785,4 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 11,
   },
-
 });

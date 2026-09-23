@@ -95,7 +95,6 @@ export default function ProfileScreen() {
           </Text> */}
         </View>
 
-        {/* PROFILE CARD */}
         <View style={[styles.profileCard, { backgroundColor: colors.card }]}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>JE</Text>
@@ -111,7 +110,6 @@ export default function ProfileScreen() {
 
           <View style={[styles.divider, { backgroundColor: colors.divider }]} />
 
-          {/* FULL NAME */}
           <View style={styles.inputSection}>
             <Text style={[styles.inputLabel, { color: colors.text }]}>
               FULL NAME
@@ -143,7 +141,6 @@ export default function ProfileScreen() {
             )}
           </View>
 
-          {/* EMAIL */}
           <View style={styles.inputSection}>
             <Text style={[styles.inputLabel, { color: colors.text }]}>
               EMAIL ADDRESS
@@ -177,7 +174,6 @@ export default function ProfileScreen() {
             )}
           </View>
 
-          {/* SAVE BUTTON */}
           <Pressable
             onPress={handleSave}
             style={({ pressed }) => [
@@ -189,7 +185,6 @@ export default function ProfileScreen() {
             <Text style={styles.saveButtonText}>Save Profile</Text>
           </Pressable>
 
-          {/* SAVED CONFIRMATION */}
           {saved && (
             <View
               style={[
@@ -206,7 +201,6 @@ export default function ProfileScreen() {
           )}
         </View>
 
-        {/* INFORMATION CARD */}
         <View style={[styles.infoCard, { backgroundColor: colors.card }]}>
           <Text style={[styles.infoTitle, { color: colors.text }]}>
             Student Information

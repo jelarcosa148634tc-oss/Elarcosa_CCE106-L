@@ -53,22 +53,7 @@ export default function EventDetailsScreen() {
         routeBox: "#1E3A8A",
       };
 
-  /*
-   * Action colors
-   *
-   * Light mode:
-   * Join Event = Emerald Green
-   * Leave Event = Darker Emerald
-   *
-   * Dark mode:
-   * Join Event = Emerald Green
-   * Leave Event = Red
-   */
-  const actionButtonColor = event?.joined
-    ? darkMode
-      ? "#EF4444"
-      : "#059669"
-    : "#10B981";
+  const actionButtonColor = event?.joined ? "#EF4444" : "#10B981";
 
   if (!event) {
     return (
@@ -133,8 +118,6 @@ export default function EventDetailsScreen() {
           contentContainerStyle={styles.scrollContainer}
           showsVerticalScrollIndicator={false}
         >
-          {/* GO BACK */}
-
           <Pressable
             onPress={() => router.back()}
             style={({ pressed }) => [
@@ -173,8 +156,6 @@ export default function EventDetailsScreen() {
             </Text>
           </Pressable>
 
-          {/* HEADER */}
-
           <View style={styles.header}>
             <Text style={styles.brand}>EVENT DETAILS</Text>
 
@@ -186,8 +167,6 @@ export default function EventDetailsScreen() {
               </Text>
             </View>
           </View>
-
-          {/* EVENT INFORMATION */}
 
           <View style={[styles.card, { backgroundColor: colors.card }]}>
             <View style={styles.detailSection}>
@@ -272,8 +251,6 @@ export default function EventDetailsScreen() {
               </Text>
             </Pressable>
           </View>
-
-          {/* DYNAMIC ROUTE */}
 
           <View style={styles.routeBox}>
             <Text style={styles.routeTitle}>DYNAMIC ROUTE</Text>

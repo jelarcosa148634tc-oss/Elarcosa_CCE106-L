@@ -69,8 +69,6 @@ export default function HomeScreen() {
         ]}
         showsVerticalScrollIndicator={false}
       >
-        {/* HEADER */}
-
         <View style={styles.header}>
           <Text style={[styles.brand, { color: colors.accent }]}>
             EVENTMATE
@@ -82,8 +80,6 @@ export default function HomeScreen() {
             Discover what's happening around your campus.
           </Text>
         </View>
-
-        {/* WELCOME HERO */}
 
         <View style={[styles.heroCard, { backgroundColor: colors.hero }]}>
           <View style={styles.heroContent}>
@@ -133,8 +129,6 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* OVERVIEW */}
-
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Overview</Text>
 
@@ -163,8 +157,6 @@ export default function HomeScreen() {
             <StatCard label="Upcoming Events" value={String(upcomingEvents)} />
           </View>
         </View>
-
-        {/* UPCOMING EVENTS */}
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Upcoming Events</Text>
@@ -227,8 +219,6 @@ export default function HomeScreen() {
             </Text>
           </View>
         </View>
-
-        {/* QUICK ACCESS */}
 
         <View
           style={[styles.quickCard, { backgroundColor: colors.cardSecondary }]}
